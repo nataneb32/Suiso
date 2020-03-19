@@ -27,6 +27,7 @@
     "reflect-metadata": "^0.1.10",
     "sqlite3": "^4.0.3",
     "sucrase": "^3.12.1",
+    "ts-jest": "^25.2.1",
     "typeorm": "0.2.24"
   },
   "scripts": {

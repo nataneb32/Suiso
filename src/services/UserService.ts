@@ -16,7 +16,7 @@ class UserService {
     return this.findById(response.id)
   }
 
-  private async findById (id: number): Promise<User> {
+  public async findById (id: number): Promise<User> {
     return getRepository(User).createQueryBuilder('user').where('user.id = :id', { id }).getOne()
   }
 }
