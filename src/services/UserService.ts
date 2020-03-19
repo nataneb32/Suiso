@@ -1,5 +1,6 @@
 import { createQueryBuilder, getRepository } from 'typeorm'
 import { User } from '../entity/User'
+import { hash } from '../utils/auth'
 
 class UserService {
   public async getUsers (): Promise<User[]> {
@@ -10,8 +11,11 @@ class UserService {
 
   public async createUser (username: string, password: string): Promise<User> {
     const user = new User()
-    user.username = username
-    user.password = password
+    Object.assign(user, {
+      username,
+      password: await hash(password) // save a hash password
+    })
+
     const response = await getRepository(User).save(user)
     return this.findById(response.id)
   }

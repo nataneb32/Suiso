@@ -4,6 +4,7 @@ import UserController from './controllers/UserController'
 const server = express()
 
 server.use(express.json())
-server.get('/posts/', UserController.index)
+server.get('/users/', UserController.index)
+server.post('/user/', UserController.store)
 
 export default server
