@@ -5,6 +5,7 @@ const server = express()
 
 server.use(express.json())
 server.get('/users/', UserController.index)
-server.post('/user/', UserController.store)
+server.post('/signin/', UserController.store)
+server.post('/login/', UserController.login)
 
 export default server

@@ -23,6 +23,10 @@ class UserService {
   public async findById (id: number): Promise<User> {
     return getRepository(User).createQueryBuilder('user').where('user.id = :id', { id }).getOne()
   }
+
+  public async findByUsername (username: string): Promise<User> {
+    return getRepository(User).createQueryBuilder('user').where('user.username = :username', { username }).getOne()
+  }
 }
 
 export default new UserService()
