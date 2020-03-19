@@ -1,7 +1,7 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import UserService from '../services/UserService'
 import { compareWithHash } from '../utils/auth'
-import { createToken } from '../utils/jwt'
+import { createToken, verify } from '../utils/jwt'
 
 class UserController {
   public async index (req: Request, res: Response): Promise<void> {
@@ -29,6 +29,16 @@ class UserController {
       })
     } catch (err) {
       res.status(400).send(err.message)
+    }
+  }
+
+  public async verify (req: Request, res: Response, next: NextFunction) {
+    try {
+      const authToken: string = req.headers.authorization && req.headers.authorization.split(' ')[1]
+      if (!verify(authToken)) throw Error("Auth token isn't valid.")
+      next()
+    } catch (err) {
+      res.status(500).send(err.message)
     }
   }
 }
