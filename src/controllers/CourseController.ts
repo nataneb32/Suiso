@@ -4,7 +4,7 @@ import CourseService from '../services/CourseService'
 class CourseController {
   public async index (req: Request, res: Response):Promise<void> {
     try {
-      res.send(CourseService.getCourses())
+      res.json(await CourseService.getCourses())
     } catch (err) {
       res.status(400).send(err.message)
     }
@@ -12,8 +12,11 @@ class CourseController {
 
   public async store (req: Request, res: Response): Promise<void> {
     try {
-      const { userId, name, price } = req.body
-      const course = await CourseService.createCourse(userId, name, price)
+      const { user, name, price } = req.body
+      if (!name) throw Error("Name can't be null.")
+      if (!price) throw Error("Price can't be null.")
+
+      const course = await CourseService.createCourse(user.id, name, price)
       res.json(course)
     } catch (err) {
       res.status(400).send(err.message)

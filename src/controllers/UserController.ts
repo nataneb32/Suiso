@@ -46,7 +46,7 @@ class UserController {
       const decode = <Decode>verify(authToken)
       if (!decode) throw Error("Auth token isn't valid.")
 
-      const user = UserService.findById(decode.userId)
+      const user = await UserService.findById(decode.userId)
       if (!user) throw Error('User not found.')
       req.body.user = user
 

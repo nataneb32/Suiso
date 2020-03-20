@@ -4,26 +4,13 @@ import { User } from '../entity/User'
 import UserService from './UserService'
 class CourseService {
   public async getCourses (): Promise<Course[]> {
-    return createQueryBuilder()
-      .select('course')
-      .from(Course, 'course')
-      .getMany()
+    return getRepository(Course).find({ relations: ['seller'] })
   }
 
   public async findById (id: number): Promise<Course> {
-    return createQueryBuilder()
-      .select('course')
-      .from(Course, 'course')
-      .where('course.id = :id', { id })
-      .getOne()
-  }
-
-  public async findByIdAndSeller (id: number, seller: User): Promise<Course> {
-    return createQueryBuilder()
-      .select('course')
-      .from(Course, 'course')
-      .where('course.id = :id', { id })
-      .getOne()
+    return getRepository(Course).findOne(id, {
+      relations: ['seller']
+    })
   }
 
   public async createCourse (sellerId: number, name: string, price: number) {
@@ -36,7 +23,8 @@ class CourseService {
       seller
     })
 
-    return getRepository(Course).save(newCourse)
+    const course = await getRepository(Course).save(newCourse)
+    return this.findById(course.id)
   }
 }
 
