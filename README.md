@@ -7,7 +7,7 @@ It's on development, but it meant to be a video plataform for courses.
 It's the client and the one that is willing to watch the courses.
 
 ### Sellers
-They make and sell courses in this platform.
+They make and sell courses in this platform. they are also a user.
 
 ### Courses
 It's the product made by the sellers.

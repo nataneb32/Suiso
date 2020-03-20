@@ -38,8 +38,18 @@ class UserController {
 
   public async verify (req: Request, res: Response, next: NextFunction) {
     try {
+      interface Decode{
+        userId: number
+      }
+
       const authToken: string = req.headers.authorization && req.headers.authorization.split(' ')[1]
-      if (!verify(authToken)) throw Error("Auth token isn't valid.")
+      const decode = <Decode>verify(authToken)
+      if (!decode) throw Error("Auth token isn't valid.")
+
+      const user = UserService.findById(decode.userId)
+      if (!user) throw Error('User not found.')
+      req.body.user = user
+
       next()
     } catch (err) {
       res.status(500).send(err.message)
