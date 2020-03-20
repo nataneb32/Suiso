@@ -1,15 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from 'typeorm'
+import { Course } from './Course'
 
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column({
       unique: true
     })
-    username: string
+    username!: string
 
     @Column()
-    password: string
+    password!: string
+
+    @OneToMany(type => Course, course => course.seller, { onDelete: 'CASCADE' })
+    courses: Course[]
 }

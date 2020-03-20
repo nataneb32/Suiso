@@ -21,10 +21,11 @@ describe('User service', () => {
   })
 
   describe('createUser', () => {
-    it('should create a user', async () => {
+    it('should create a user.', async () => {
       const user = { username: 'user', password: 'pass' }
       auth.hash = jest.fn().mockImplementation(async p => p) // mock auth
       UserService.findById = jest.fn().mockResolvedValue(user)
+      UserService.findByUsername = jest.fn().mockResolvedValue(null)
 
       typeorm.getRepository = jest.fn().mockReturnValue({
         save: jest.fn().mockResolvedValue(user => user)
@@ -33,6 +34,21 @@ describe('User service', () => {
       const response = await UserService.createUser(user.username, user.password)
       expect(response).toEqual(expect.objectContaining(user))
       expect(typeorm.getRepository().save).toHaveBeenCalledWith(user)
+    })
+
+    it('should not create a user, because username is unique.', async () => {
+      const user = { username: 'user', password: 'pass' }
+      auth.hash = jest.fn().mockImplementation(async p => p) // mock auth
+      UserService.findById = jest.fn().mockResolvedValue(user)
+      UserService.findByUsername = jest.fn().mockResolvedValue(user)
+
+      typeorm.getRepository = jest.fn().mockReturnValue({
+        save: jest.fn().mockResolvedValue(user => user)
+      })
+
+      const response = UserService.createUser(user.username, user.password)
+      expect(response).rejects.toThrow()
+      expect(typeorm.getRepository().save).not.toHaveBeenCalled()
     })
   })
 })

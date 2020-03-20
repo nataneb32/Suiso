@@ -10,9 +10,13 @@ class UserController {
   }
 
   public async store (req: Request, res: Response): Promise<void> {
-    const { username, password } = req.body
-    const newUser = await UserService.createUser(username, password)
-    res.json(newUser)
+    try {
+      const { username, password } = req.body
+      const newUser = await UserService.createUser(username, password)
+      res.json(newUser)
+    } catch (err) {
+      res.status(401).send(err.message)
+    }
   }
 
   public async login (req: Request, res: Response) {

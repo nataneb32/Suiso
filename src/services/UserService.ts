@@ -10,6 +10,8 @@ class UserService {
   }
 
   public async createUser (username: string, password: string): Promise<User> {
+    if (await this.findByUsername(username)) throw Error('Usuario já existe.')
+
     const user = new User()
     Object.assign(user, {
       username,
