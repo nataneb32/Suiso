@@ -4,13 +4,19 @@ import { User } from '../entity/User'
 import UserService from './UserService'
 class CourseService {
   public async getCourses (): Promise<Course[]> {
-    return getRepository(Course).find({ relations: ['seller'] })
+    return getRepository(Course).createQueryBuilder('course')
+      .getMany()
+  }
+
+  public async getCourse (id: number) {
+    return this.findById(id)
   }
 
   public async findById (id: number): Promise<Course> {
-    return getRepository(Course).findOne(id, {
-      relations: ['seller']
-    })
+    return getRepository(Course).createQueryBuilder('course')
+      .leftJoinAndSelect('course.seller', 'seller')
+      .where('course.id = :id', { id })
+      .getOne()
   }
 
   public async createCourse (sellerId: number, name: string, price: number) {

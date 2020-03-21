@@ -10,6 +10,15 @@ class CourseController {
     }
   }
 
+  public async show (req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params
+      res.json(await CourseService.getCourse(parseInt(id)))
+    } catch (err) {
+      res.status(400).send(err.message)
+    }
+  }
+
   public async store (req: Request, res: Response): Promise<void> {
     try {
       const { user, name, price } = req.body

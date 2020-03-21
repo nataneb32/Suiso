@@ -26,6 +26,13 @@ class UserService {
     return getRepository(User).createQueryBuilder('user').where('user.id = :id', { id }).getOne()
   }
 
+  public async findByUsernameAndGetPasswordHash (username: string): Promise<User> {
+    return getRepository(User).createQueryBuilder('user')
+      .addSelect('user.password')
+      .where('user.username = :username', { username })
+      .getOne()
+  }
+
   public async findByUsername (username: string): Promise<User> {
     return getRepository(User).createQueryBuilder('user').where('user.username = :username', { username }).getOne()
   }

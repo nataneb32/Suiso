@@ -22,8 +22,8 @@ class UserController {
   public async login (req: Request, res: Response) {
     try {
       const { username, password } = req.body
-      const user = await UserService.findByUsername(username)
-      if (!compareWithHash(password, user.password)) throw Error('Senha invalida.')
+      const user = await UserService.findByUsernameAndGetPasswordHash(username)
+      if (!await compareWithHash(password, user.password)) throw Error('Senha invalida.')
 
       res.status(200).json({
         username: username,
@@ -44,10 +44,11 @@ class UserController {
 
       const authToken: string = req.headers.authorization && req.headers.authorization.split(' ')[1]
       const decode = <Decode>verify(authToken)
-      if (!decode) throw Error("Auth token isn't valid.")
+      if (!decode.userId) throw Error("Auth token isn't valid.")
 
       const user = await UserService.findById(decode.userId)
-      if (!user) throw Error('User not found.')
+
+      if (user.id !== decode.userId) { throw Error('User not found.') }
       req.body.user = user
 
       next()

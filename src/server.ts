@@ -11,5 +11,6 @@ server.use(UserController.verify)
 server.get('/users/', UserController.index)
 server.post('/course/', CourseController.store)
 server.get('/course/', CourseController.index)
+server.get('/course/:id', CourseController.show)
 
 export default server
