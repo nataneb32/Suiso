@@ -36,7 +36,7 @@
     "typeorm": "0.2.24"
   },
   "scripts": {
-    "start": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts    ",
+    "start": "nodemon --watch 'src/**/*.ts' --watch 'src/**/*.graphql' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts    ",
     "test": "jest"
   },
   "main": "index.js",

@@ -1,16 +1,14 @@
-import * as express from 'express'
-import UserController from './controllers/UserController'
-import CourseController from './controllers/CourseController'
+// import UserController from './controllers/UserController'
+// import CourseController from './controllers/CourseController'
+import { GraphQLServer } from 'graphql-yoga'
+import UserService from './services/UserService'
 
-const server = express()
-
-server.use(express.json())
-server.post('/signin/', UserController.store)
-server.post('/login/', UserController.login)
-server.use(UserController.verify)
-server.get('/users/', UserController.index)
-server.post('/course/', CourseController.store)
-server.get('/course/', CourseController.index)
-server.get('/course/:id', CourseController.show)
-
+const server = new GraphQLServer({
+  typeDefs: './src/graphql/schemas.graphql',
+  resolvers: {
+    Query: {
+      users: () => UserService.getUsers()
+    }
+  }
+})
 export default server
