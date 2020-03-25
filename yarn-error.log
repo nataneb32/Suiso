@@ -1,5 +1,5 @@
 Arguments: 
-  /home/nataneb/.nvm/versions/node/v12.10.0/bin/node /home/nataneb/.nvm/versions/node/v12.10.0/bin/yarn add @types/graphql-yoga
+  /home/nataneb/.nvm/versions/node/v12.10.0/bin/node /home/nataneb/.nvm/versions/node/v12.10.0/bin/yarn add @types/graphql-shield
 
 PATH: 
   /home/nataneb/.serverless/bin:/home/nataneb/.nvm/versions/node/v12.10.0/bin:/home/nataneb/.serverless/bin:/home/nataneb/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-13-oracle/bin:/usr/lib/jvm/java-13-oracle/db/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fgraphql-yoga: Not found
+  Error: https://registry.yarnpkg.com/@types%2fgraphql-shield: Not found
       at Request.params.callback [as _callback] (/home/nataneb/.nvm/versions/node/v12.10.0/lib/node_modules/yarn/lib/cli.js:66987:18)
       at Request.self.callback (/home/nataneb/.nvm/versions/node/v12.10.0/lib/node_modules/yarn/lib/cli.js:140748:22)
       at Request.emit (events.js:209:13)
@@ -55,6 +55,7 @@ npm manifest:
       "@types/jsonwebtoken": "^8.3.8",
       "bcrypt": "^4.0.1",
       "express": "^4.17.1",
+      "graphql-shield": "^7.2.1",
       "graphql-yoga": "^1.18.3",
       "jest": "^25.1.0",
       "jsonwebtoken": "^8.5.1",
@@ -62,10 +63,11 @@ npm manifest:
       "sqlite3": "^4.0.3",
       "sucrase": "^3.12.1",
       "ts-jest": "^25.2.1",
-      "typeorm": "0.2.24"
+      "typeorm": "0.2.24",
+      "vue-fontawesome": "^0.0.2"
     },
     "scripts": {
-      "start": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts    ",
+      "start": "nodemon --watch 'src/**/*.ts' --watch 'src/**/*.graphql' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts    ",
       "test": "jest"
     },
     "main": "index.js",
@@ -805,6 +807,13 @@ Lockfile:
     dependencies:
       regenerator-runtime "^0.13.4"
   
+  "@babel/runtime@^7.8.7":
+    version "7.9.2"
+    resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.2.tgz#d90df0583a3a252f09aaa619665367bae518db06"
+    integrity sha512-NE2DtOdufG7R5vnfQUTehdTfNycfUANEtCa9PssN9O/xmTzP4E08UI797ixaei6hBEVL9BI/PsdJS5x7mWoB9Q==
+    dependencies:
+      regenerator-runtime "^0.13.4"
+  
   "@babel/template@^7.7.4", "@babel/template@^7.8.3", "@babel/template@^7.8.6":
     version "7.8.6"
     resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.8.6.tgz#86b22af15f828dfb086474f964dcc3e39c43ce2b"
@@ -1220,6 +1229,11 @@ Lockfile:
     integrity sha512-9T1auFmbPZoxHz0enUFlUuKRy3it01R+hlggyVUMtnCTQRunsQYifnSGb8hET4Xo8yiC0o0r1paW3ud5+rbURg==
     dependencies:
       "@types/yargs-parser" "*"
+  
+  "@types/yup@0.26.33":
+    version "0.26.33"
+    resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.26.33.tgz#301faab47b952a4a5f9a06246942cc7cbd09cd95"
+    integrity sha512-QzgcNfDtRIph8CjfoWiu+MJiOUp25Yo7FthuOHLVbtCTyonjOo2YRsFzKo3csDWbTXlw5NedOFH0Nje7yipCrA==
   
   "@types/zen-observable@^0.5.3":
     version "0.5.4"
@@ -2851,6 +2865,16 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.1.tgz#69e57caa8f0eacbc281d2e2cb458d46fdb449e08"
     integrity sha512-a1hQMktqW9Nmqr5aktAux3JMNqaucxGcjtjWnZLHX7yyPCmlSV3M54nGYbqT8K+0GhF3NBgmJCc3ma+WOgX8Jg==
   
+  fn-name@~3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/fn-name/-/fn-name-3.0.0.tgz#0596707f635929634d791f452309ab41558e3c5c"
+    integrity sha512-eNMNr5exLoavuAMhIUVsOKF79SWd/zG104ef6sxBTSw+cZc6BXdQXDvYcGvp0VbxVVSp1XDUNoz7mg1xMtSznA==
+  
+  font-awesome@^4.7.0:
+    version "4.7.0"
+    resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
+    integrity sha1-j6jPBBGhoxr9B7BtKQK7n8gVoTM=
+  
   for-in@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -3056,6 +3080,15 @@ Lockfile:
     integrity sha512-fJ1Y0Ck5ctmfaQFoWv7vNnVP7We19P3miVmOT85YPrjpzbMYv0wPfxm4Zjt8nnqXr0KU9nGW53tz3K7/Lvzxtw==
     dependencies:
       graphql-playground-html "1.6.12"
+  
+  graphql-shield@^7.2.1:
+    version "7.2.1"
+    resolved "https://registry.yarnpkg.com/graphql-shield/-/graphql-shield-7.2.1.tgz#baca0c31a19593ede41a4bb4d476f9edd1d0eb78"
+    integrity sha512-EEoVYvXuqAGXGH1i9Aot4MJIUlRABVycwKRGaBreabys7yTd+0zGwudKB9yZiW3SEMIjHkz3a0r/ILhYzq0uiw==
+    dependencies:
+      "@types/yup" "0.26.33"
+      object-hash "^2.0.3"
+      yup "^0.28.3"
   
   graphql-subscriptions@^0.5.8:
     version "0.5.8"
@@ -4210,6 +4243,11 @@ Lockfile:
     dependencies:
       p-locate "^4.1.0"
   
+  lodash-es@^4.17.11:
+    version "4.17.15"
+    resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
+    integrity sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
+  
   lodash.includes@^4.3.0:
     version "4.3.0"
     resolved "https://registry.yarnpkg.com/lodash.includes/-/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
@@ -4660,6 +4698,11 @@ Lockfile:
       define-property "^0.2.5"
       kind-of "^3.0.3"
   
+  object-hash@^2.0.3:
+    version "2.0.3"
+    resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-2.0.3.tgz#d12db044e03cd2ca3d77c0570d87225b02e1e6ea"
+    integrity sha512-JPKn0GMu+Fa3zt3Bmr66JhokJU5BaNBIh4ZeTlaCBzrBsOeXzwcKKAK1tbLiPKgvwmPXsDvvLHoWh5Bm7ofIYg==
+  
   object-inspect@^1.7.0:
     version "1.7.0"
     resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.7.0.tgz#f4f6bd181ad77f006b5ece60bd0b6f398ff74a67"
@@ -5011,6 +5054,11 @@ Lockfile:
     dependencies:
       kleur "^3.0.3"
       sisteransi "^1.0.4"
+  
+  property-expr@^2.0.0:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-2.0.2.tgz#fff2a43919135553a3bc2fdd94bdb841965b2330"
+    integrity sha512-bc/5ggaYZxNkFKj374aLbEDqVADdYaLcFo8XBkishUWbaAdjlphaBFns9TvRA2pUseVL/wMFmui9X3IdNDU37g==
   
   proxy-addr@~2.0.5:
     version "2.0.6"
@@ -5884,6 +5932,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
     integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
   
+  synchronous-promise@^2.0.10:
+    version "2.0.10"
+    resolved "https://registry.yarnpkg.com/synchronous-promise/-/synchronous-promise-2.0.10.tgz#e64c6fd3afd25f423963353043f4a68ebd397fd8"
+    integrity sha512-6PC+JRGmNjiG3kJ56ZMNWDPL8hjyghF5cMXIFOKg+NiwwEZZIvxTWd0pinWKyD227odg9ygF8xVhhz7gb8Uq7A==
+  
   table@^5.2.3:
     version "5.4.6"
     resolved "https://registry.yarnpkg.com/table/-/table-5.4.6.tgz#1292d19500ce3f86053b05f0e8e7e4a3bb21079e"
@@ -6006,6 +6059,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
     integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
+  
+  toposort@^2.0.2:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/toposort/-/toposort-2.0.2.tgz#ae21768175d1559d48bef35420b2f4962f09c330"
+    integrity sha1-riF2gXXRVZ1IvvNUILL0li8JwzA=
   
   tough-cookie@^2.3.3, tough-cookie@~2.5.0:
     version "2.5.0"
@@ -6301,6 +6359,19 @@ Lockfile:
       core-util-is "1.0.2"
       extsprintf "^1.2.0"
   
+  vue-fontawesome@^0.0.2:
+    version "0.0.2"
+    resolved "https://registry.yarnpkg.com/vue-fontawesome/-/vue-fontawesome-0.0.2.tgz#b1b9c922652b9fb2d74fe66a28411628502bb3eb"
+    integrity sha1-sbnJImUrn7LXT+ZqKEEWKFArs+s=
+    dependencies:
+      font-awesome "^4.7.0"
+      vue "^2.1.8"
+  
+  vue@^2.1.8:
+    version "2.6.11"
+    resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
+    integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+  
   w3c-hr-time@^1.0.1:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.2.tgz#0a89cdf5cc15822df9c360543676963e0cc308cd"
@@ -6536,6 +6607,19 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
     integrity sha1-5a2ryKz0CPY4X8dklWhMiOavaJo=
+  
+  yup@^0.28.3:
+    version "0.28.3"
+    resolved "https://registry.yarnpkg.com/yup/-/yup-0.28.3.tgz#1ca607405a8adf24a5ac51f54bd09d527555f0ba"
+    integrity sha512-amVkCgFWe5bGjrrUiODkbIzrSwtB8JpZrQYSrfj2YsbRdrV+tn9LquWdZDlfOx2HXyfEA8FGnlwidE/bFDxO7Q==
+    dependencies:
+      "@babel/runtime" "^7.8.7"
+      fn-name "~3.0.0"
+      lodash "^4.17.15"
+      lodash-es "^4.17.11"
+      property-expr "^2.0.0"
+      synchronous-promise "^2.0.10"
+      toposort "^2.0.2"
   
   zen-observable-ts@^0.8.20:
     version "0.8.20"

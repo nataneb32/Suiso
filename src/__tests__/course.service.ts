@@ -8,14 +8,18 @@ describe('Course Service', () => {
         select: jest.fn().mockReturnThis(),
         from: jest.fn().mockReturnThis(),
         getMany: jest.fn().mockResolvedValue('0x0'),
-        relation: jest.fn().mockReturnThis()
+        relation: jest.fn().mockReturnThis(),
+        offset: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis()
       }
       typeorm.createQueryBuilder = jest.fn().mockReturnValue(mock)
 
-      const courses = await CourseService.getCourses()
+      const courses = await CourseService.getCourses(1, 1)
       expect(courses).toBe('0x0')
       expect(mock.from).toHaveBeenCalledWith(Course, 'course')
       expect(mock.select).toHaveBeenCalledWith('course')
+      expect(mock.limit).toHaveBeenCalledWith(1)
+      expect(mock.offset).toHaveBeenCalledWith(1)
     })
   })
 

@@ -15,4 +15,7 @@ export class Course {
     @ManyToOne(type => User, user => user.courses, { onDelete: 'CASCADE', eager: true })
     @JoinColumn()
     seller: User;
+
+    @Column({ nullable: true })
+    description: string;
 }

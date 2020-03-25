@@ -5,13 +5,22 @@ type User {
 
 type Course {
     id: ID!
-    title: String!
+    name: String!
+    price: Float!
+    seller: User
+    description: String!
 }
+
+
 
 type Query {
     users: [User!]
+    courses(limit: Int = 10, offset: Int = 0): [Course!]
 }
+
 
 type Mutation {
     createUser(username: String!,password: String!): User
+    createCourse(seller: ID!,name: String!,price: Float!,description: String! = ""): Course
+    login(username: String!,password: String!): String!
 }

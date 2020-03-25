@@ -1,14 +1,22 @@
 // import UserController from './controllers/UserController'
 // import CourseController from './controllers/CourseController'
 import { GraphQLServer } from 'graphql-yoga'
-import UserService from './services/UserService'
+import UserResolvers from './resolvers/UserResolvers'
+import CourseResolvers from './resolvers/CourseResolvers'
+import middlewares from './graphql/middlewares'
 
-const server = new GraphQLServer({
-  typeDefs: './src/graphql/schemas.graphql',
-  resolvers: {
-    Query: {
-      users: () => UserService.getUsers()
-    }
+class Server extends GraphQLServer {
+  constructor () {
+    super({
+      typeDefs: './src/graphql/schemas.graphql',
+      resolvers: [
+        UserResolvers,
+        CourseResolvers
+      ],
+      middlewares,
+      context: (ctx) => ({ ...ctx })
+    })
   }
-})
-export default server
+}
+
+export default new Server()

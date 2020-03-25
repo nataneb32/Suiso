@@ -3,7 +3,7 @@ export const config = {
   salt: 10
 }
 
-export async function hash (password): Promise<string> {
+export async function hash (password: string): Promise<string> {
   return bcrypt.hash(password, config.salt)
 }
 
