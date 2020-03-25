@@ -1,10 +1,13 @@
 import { Course } from '../entity/Course'
-import { createQueryBuilder, getRepository } from 'typeorm'
+import { getRepository } from 'typeorm'
 import { User } from '../entity/User'
 import UserService from './UserService'
 class CourseService {
-  public async getCourses (): Promise<Course[]> {
+  public async getCourses (offset: number, limit: number): Promise<Course[]> {
     return getRepository(Course).createQueryBuilder('course')
+      .offset(offset)
+      .limit(limit)
+      .leftJoinAndSelect('course.seller', 'seller')
       .getMany()
   }
 
@@ -19,14 +22,15 @@ class CourseService {
       .getOne()
   }
 
-  public async createCourse (sellerId: number, name: string, price: number) {
+  public async createCourse (sellerId: number, name: string, price: number, description: string = '') {
     const seller = await UserService.findById(sellerId)
     const newCourse = new User()
 
     Object.assign(newCourse, {
       name,
       price,
-      seller
+      seller,
+      description
     })
 
     const course = await getRepository(Course).save(newCourse)
