@@ -9,10 +9,9 @@ class UserService {
       .getMany()
   }
 
-  public async createUser (username: string, password: string): Promise<User> {
-    if (await this.findByUsername(username)) throw Error('Usuario já existe.')
-
+  public async createUser (username: string, password: string): Promise<User | void> {
     const user = new User()
+
     Object.assign(user, {
       username,
       password: await hash(password) // save a hash password
