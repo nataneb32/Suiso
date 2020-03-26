@@ -10,7 +10,7 @@ export default {
   },
   Mutation: {
     async createUser (_, { username, password }) {
-      if (await UserService.findByUsername(username)) throw Error("This username has already been taken.")
+      if (await UserService.findByUsername(username)) throw Error('This username has already been taken.')
 
       const a = UserService.createUser(username, password)
       return a
