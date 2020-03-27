@@ -7,5 +7,5 @@ temp/
 coverage/
 dist/
 frontend/
-database.sqlite
+./database.sqlite
 files/
