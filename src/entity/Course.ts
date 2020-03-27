@@ -20,7 +20,6 @@ export class Course {
     @Column({ nullable: true })
     description: string;
 
-    @Column()
     @OneToMany(type => CourseModule, cmodule => cmodule.course)
     modules: [CourseModule]
 }

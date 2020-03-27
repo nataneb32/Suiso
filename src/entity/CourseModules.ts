@@ -13,11 +13,9 @@ export class CourseModule {
     @Column()
     description: string
 
-    @Column()
     @OneToMany(type => Video, video => video.module)
     videos: [Video]
 
-    @Column()
     @ManyToOne(type => Course, course => course.modules, { onDelete: 'CASCADE' })
     course: Course
 }

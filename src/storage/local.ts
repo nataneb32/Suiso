@@ -1,8 +1,6 @@
 import { StorageProvider, File } from './interface'
 import * as fs from 'fs'
 import * as path from 'path'
-import { Media } from '../entity/Media'
-import { getRepository } from 'typeorm'
 
 class LocalStorageProvider implements StorageProvider {
     private storagePath: string;
@@ -19,26 +17,19 @@ class LocalStorageProvider implements StorageProvider {
       return result.join('')
     }
 
-    public async upload (readStream: fs.ReadStream): Promise<File> {
-      const type = path.extname(<string>readStream.path)
+    public async upload (readStream: fs.ReadStream, originalName: string): Promise<File> {
+      const type = path.extname(originalName)
+      console.log(type)
       const mediaToken = this.generateRandomName(20)
       const fileName = `${mediaToken}${type}`
       const writeStream = fs.createWriteStream(path.join(this.storagePath, fileName))
-      readStream.pipe(writeStream)
-      await writeStream.close()
-
-      // create a image on database
-      const media = new Media()
-      media.name = path.basename(<string>readStream.path)
-      media.type = type.replace('.', '')
-      media.fileName = fileName
-      await getRepository(Media).save(media)
+      await new Promise(resolve => readStream.pipe(writeStream).on('finish', () => resolve()))
 
       return <File>{
-        name: '',
-        fileName: '',
+        name: originalName,
+        fileName: fileName,
         id: '',
-        type: ''
+        type: originalName.split('.').pop()
       }
     }
 
@@ -50,8 +41,12 @@ class LocalStorageProvider implements StorageProvider {
       return null
     }
 
-    public stream (file): fs.ReadStream {
-      return null
+    public stream (fileName): fs.ReadStream {
+      if (fs.existsSync(path.join(this.storagePath, fileName))) {
+        return fs.createReadStream(path.join(this.storagePath, fileName))
+      } else {
+        return null
+      }
     }
 }
 

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from 'typeorm'
 import { Media } from './Media'
 import { CourseModule } from './CourseModules'
 
@@ -13,10 +13,10 @@ export class Video {
     @Column()
     description: string
 
-    @Column()
+    @OneToOne(type => Media)
+    @JoinColumn()
     media: Media
 
-    @Column()
     @ManyToOne(type => CourseModule, cmodule => cmodule.videos, { onDelete: 'CASCADE' })
     module: CourseModule
 }

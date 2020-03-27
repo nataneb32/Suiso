@@ -1,3 +1,5 @@
+scalar Upload
+
 type User {
     id: ID!
     username: String!
@@ -22,5 +24,6 @@ type Query {
 type Mutation {
     createUser(username: String!,password: String!): User
     createCourse(seller: ID!,name: String!,price: Float!,description: String! = ""): Course
+    newFile(file: Upload!): String
     login(username: String!,password: String!): String!
 }
