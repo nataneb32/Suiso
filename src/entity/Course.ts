@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne } from 'typeorm'
 import { User } from './User'
 import { CourseModule } from './CourseModules'
+import { Media } from './Media'
 
 @Entity()
 export class Course {
@@ -22,4 +23,7 @@ export class Course {
 
     @OneToMany(type => CourseModule, cmodule => cmodule.course)
     modules: [CourseModule]
+
+    @OneToOne(type => Media)
+    thumbnail: Media
 }

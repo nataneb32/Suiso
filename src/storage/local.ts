@@ -33,11 +33,11 @@ class LocalStorageProvider implements StorageProvider {
       }
     }
 
-    public delete (file: File) {
+    public delete (fileName: string) {
       return false
     }
 
-    public find (fileId: string): File {
+    public find (fileName: string): File {
       return null
     }
 
