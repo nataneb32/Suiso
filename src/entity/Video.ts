@@ -17,6 +17,6 @@ export class Video {
     media: Media
 
     @Column()
-    @ManyToOne(type => CourseModule, cmodule => cmodule.videos)
+    @ManyToOne(type => CourseModule, cmodule => cmodule.videos, { onDelete: 'CASCADE' })
     module: CourseModule
 }
