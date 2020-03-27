@@ -11,6 +11,7 @@ class UserService {
 
   public async createUser (username: string, password: string): Promise<User | void> {
     const user = new User()
+    if (await this.findByUsername(username)) throw Error('This username has already been taken.')
 
     Object.assign(user, {
       username,

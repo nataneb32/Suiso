@@ -16,6 +16,9 @@ class Server extends GraphQLServer {
       middlewares,
       context: (ctx) => ({ ...ctx })
     })
+    this.express.get('/files/:id', (req, res) => {
+      res.send(req.params.id)
+    })
   }
 }
 
