@@ -19,7 +19,7 @@ class LocalStorageProvider implements StorageProvider {
 
     public async upload (readStream: fs.ReadStream, originalName: string): Promise<File> {
       const type = path.extname(originalName)
-      console.log(type)
+
       const mediaToken = this.generateRandomName(20)
       const fileName = `${mediaToken}${type}`
       const writeStream = fs.createWriteStream(path.join(this.storagePath, fileName))
@@ -47,6 +47,14 @@ class LocalStorageProvider implements StorageProvider {
       } else {
         return null
       }
+    }
+
+    public partialStream (fileName: string, end: number, start: number): fs.ReadStream {
+      return fs.createReadStream(path.join(this.storagePath, fileName), { start, end })
+    }
+
+    public stat (fileName: string) {
+      return fs.statSync(path.join(__dirname, fileName))
     }
 }
 

@@ -1,6 +1,5 @@
 import CourseService from '../services/CourseService'
 import { FileUpload } from 'graphql-upload'
-import * as fs from 'fs'
 import StorageProvider from '../storage'
 export default {
   Query: {
@@ -9,18 +8,19 @@ export default {
     }
   },
   Mutation: {
-    async createCourse (_, { seller, name, price, description }) {
+    async createCourse (_, { seller, name, price, description, thumbnail }) {
       try {
-        const a = await CourseService.createCourse(seller, name, price, description)
+        const a = await CourseService.createCourse(seller, name, price, description, thumbnail)
         return a
       } catch (err) {
+        console.error(err)
         return null
       }
     },
     async newFile (_, { file }) {
       const { filename, mimetype, createReadStream } = await <FileUpload>file
       const readStream = createReadStream()
-      console.log(await StorageProvider.upload(readStream, filename))
+
       return true
     }
   }

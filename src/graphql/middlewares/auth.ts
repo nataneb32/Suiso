@@ -3,7 +3,7 @@ import { verify } from '../../utils/jwt'
 
 const isAuthenticated = rule()(async (parent, args, ctx, info) => {
   const authorize = ctx.request.get('Authorization')
-  console.log(ctx)
+  
   return !!verify(authorize)
 })
 

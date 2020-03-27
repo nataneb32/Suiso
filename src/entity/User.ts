@@ -14,6 +14,6 @@ export class User {
     @Column({ select: false })
     password!: string
 
-    @OneToMany(type => Course, course => course.seller, { onDelete: 'CASCADE' })
+    @OneToMany(type => Course, course => course.seller, { cascade: true })
     courses: Course[]
 }

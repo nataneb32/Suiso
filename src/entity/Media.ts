@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, AfterLoad } from 'typeorm'
 
 @Entity()
 export class Media {
@@ -11,6 +11,10 @@ export class Media {
     @Column()
     type: string;
 
-    @Column()
-    fileName: string;
+    protected url: string;
+
+    @AfterLoad()
+    getUrl () {
+      this.url = 'http://localhost:4000/stream/' + this.name
+    }
 }

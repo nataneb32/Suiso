@@ -21,9 +21,10 @@ export class Course {
     @Column({ nullable: true })
     description: string;
 
-    @OneToMany(type => CourseModule, cmodule => cmodule.course)
-    modules: [CourseModule]
+    @OneToMany(type => CourseModule, cmodule => cmodule.course, { nullable: true })
+    modules: CourseModule[]
 
     @OneToOne(type => Media)
+    @JoinColumn()
     thumbnail: Media
 }

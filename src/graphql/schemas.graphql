@@ -5,12 +5,19 @@ type User {
     username: String!
 }
 
+type Media {
+    id: ID!
+    url: String!
+    name: String!
+}
+
 type Course {
     id: ID!
     name: String!
     price: Float!
     seller: User
     description: String!
+    thumbnail: Media
 }
 
 
@@ -23,7 +30,7 @@ type Query {
 
 type Mutation {
     createUser(username: String!,password: String!): User
-    createCourse(seller: ID!,name: String!,price: Float!,description: String! = ""): Course
+    createCourse(seller: ID!,name: String!,price: Float!,description: String! = "", thumbnail: Upload): Course
     newFile(file: Upload!): String
     login(username: String!,password: String!): String!
 }
