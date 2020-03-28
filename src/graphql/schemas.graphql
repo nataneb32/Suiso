@@ -9,6 +9,7 @@ type Media {
     id: ID!
     url: String!
     name: String!
+    type: String!
 }
 
 type Course {
@@ -20,17 +21,14 @@ type Course {
     thumbnail: Media
 }
 
-
-
 type Query {
     users: [User!]
     courses(limit: Int = 10, offset: Int = 0): [Course!]
 }
 
-
 type Mutation {
     createUser(username: String!,password: String!): User
-    createCourse(seller: ID!,name: String!,price: Float!,description: String! = "", thumbnail: Upload): Course
+    createCourse(name: String!,price: Float!,description: String! = "", thumbnail: Upload): Course
     newFile(file: Upload!): String
     login(username: String!,password: String!): String!
 }

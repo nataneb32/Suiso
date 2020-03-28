@@ -2,6 +2,10 @@ import UserService from '../services/UserService'
 import { compareWithHash } from '../utils/auth'
 import { createToken } from '../utils/jwt'
 
+export type EncodedUser = {
+  userId: number
+}
+
 export default {
   Query: {
     async users () {
@@ -18,7 +22,7 @@ export default {
       if (!user) throw Error('User not found.')
       if (!(await compareWithHash(password, user.password))) throw Error('Wrong password.')
 
-      return createToken({ userId: user.id })
+      return createToken(<EncodedUser>{ userId: user.id })
     }
   }
 }

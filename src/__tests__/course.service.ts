@@ -1,6 +1,5 @@
 import CourseService from '../services/CourseService'
 import { createConnection, getRepository, getConnection } from 'typeorm'
-import * as typeorm from 'typeorm'
 import { Course } from '../entity/Course'
 import { User } from '../entity/User'
 import { CourseModule } from '../entity/CourseModules'

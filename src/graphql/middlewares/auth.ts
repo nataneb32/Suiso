@@ -1,10 +1,12 @@
-import { shield, rule, not, inputRule, and } from 'graphql-shield'
+import { shield, rule } from 'graphql-shield'
 import { verify } from '../../utils/jwt'
+import { EncodedUser } from '../../resolvers/UserResolvers'
 
 const isAuthenticated = rule()(async (parent, args, ctx, info) => {
   const authorize = ctx.request.get('Authorization')
-  
-  return !!verify(authorize)
+  const decode = <EncodedUser>verify(authorize)
+  args.userId = decode.userId
+  return !!decode
 })
 
 export default shield({
