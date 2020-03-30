@@ -6,6 +6,7 @@ const isAuthenticated = rule()(async (parent, args, ctx, info) => {
   const authorize = ctx.request.get('Authorization')
   const decode = <EncodedUser>verify(authorize)
   args.userId = decode.userId
+  console.log(authorize)
   return !!decode
 })
 

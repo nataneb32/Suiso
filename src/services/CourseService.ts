@@ -1,11 +1,9 @@
 import { Course } from '../entity/Course'
 import { getRepository } from 'typeorm'
-import { User } from '../entity/User'
 import UserService from './UserService'
 import { FileUpload } from 'graphql-upload'
 import MediaService from './MediaService'
 import { Media } from '../entity/Media'
-import { CourseModule } from '../entity/CourseModules'
 class CourseService {
   public async getCourses (offset: number, limit: number): Promise<Course[]> {
     return getRepository(Course).createQueryBuilder('course')
@@ -29,6 +27,7 @@ class CourseService {
   }
 
   public async createCourse (sellerId: number, name: string, price: number, description: string = '', thumbnail: FileUpload) {
+    if (thumbnail.mimetype.split('/')[0] !== 'image') throw new Error('The thumbnail need to be a image!!!')
     const media = <Media> await MediaService.store(thumbnail)
     console.log(media)
     const seller = await UserService.findById(sellerId)
