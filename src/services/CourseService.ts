@@ -1,9 +1,10 @@
 import { Course } from '../entity/Course'
 import { getRepository } from 'typeorm'
 import UserService from './UserService'
-import { FileUpload } from 'graphql-upload'
 import MediaService from './MediaService'
 import { Media } from '../entity/Media'
+import { ICourse } from '../interface/CourseInterface'
+
 class CourseService {
   public async getCourses (offset: number, limit: number): Promise<Course[]> {
     return getRepository(Course).createQueryBuilder('course')
@@ -26,21 +27,18 @@ class CourseService {
       .getOne()
   }
 
-  public async createCourse (sellerId: number, name: string, price: number, description: string = '', thumbnail: FileUpload) {
-    if (thumbnail.mimetype.split('/')[0] !== 'image') throw new Error('The thumbnail need to be a image!!!')
-    const media = <Media> await MediaService.store(thumbnail)
-    console.log(media)
-    const seller = await UserService.findById(sellerId)
+  public async createCourse (userObject: ICourse) {
+    const thumbnail = MediaService.store(userObject.thumbnail)
+    const seller = await UserService.findById(userObject.sellerId)
     const newCourse = getRepository(Course).create()
-    console.log(newCourse)
+
     Object.assign(newCourse, {
-      name,
-      price,
+      name: userObject.name,
+      price: userObject.price,
       seller,
-      description,
-      thumbnail: media
+      description: userObject.description,
+      thumbnail
     })
-    console.log(newCourse)
 
     const course = await getRepository(Course).save(newCourse)
     return course

@@ -6,17 +6,21 @@
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-typescript": "^7.8.3",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "@types/node": "^8.0.29",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
     "babel-jest": "^25.1.0",
-    "commitlint": "^8.3.5",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.3",
     "ts-node": "3.3.0",
     "typescript": "^3.8.3"
   },
@@ -32,10 +36,10 @@
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "express": "^4.17.1",
+    "file-type": "^14.1.4",
     "graphql-shield": "^7.2.1",
     "graphql-upload": "^10.0.0",
     "graphql-yoga": "^1.18.3",
-    "husky": "^4.2.3",
     "jest": "^25.1.0",
     "jsonwebtoken": "^8.5.1",
     "reflect-metadata": "^0.1.10",
@@ -48,8 +52,19 @@
   },
   "scripts": {
     "start": "nodemon --watch 'src/**/*.ts' --watch 'src/**/*.graphql' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts    ",
-    "test": "jest"
+    "test": "jest",
+    "commit": "npx git-cz"
   },
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

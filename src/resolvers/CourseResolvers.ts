@@ -1,4 +1,5 @@
 import CourseService from '../services/CourseService'
+import { createCourseObject } from '../interface/CourseInterface'
 export default {
   Query: {
     async courses (_, { limit, offset }) {
@@ -7,13 +8,9 @@ export default {
   },
   Mutation: {
     async createCourse (_, { userId, name, price, description, thumbnail }) {
-      try {
-        const a = await CourseService.createCourse(userId, name, price, description, thumbnail)
-        return a
-      } catch (err) {
-        console.error(err)
-        return null
-      }
+      const course = createCourseObject({ name, thumbnail, sellerId: userId, price, description })
+      const a = await CourseService.createCourse(course)
+      return a
     }
   }
 }

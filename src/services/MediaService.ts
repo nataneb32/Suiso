@@ -1,17 +1,13 @@
 import StorageProvider from '../storage'
-import { FileUpload } from 'graphql-upload'
 import { Media } from '../entity/Media'
 import { getRepository } from 'typeorm'
+import { ReadStream } from 'fs'
 
 class MediaService {
-    private acceptedTypes
-    constructor () {
-      this.acceptedTypes = ['jpg', 'png', 'txt']
-    }
+    private acceptedTypes = ['jpg', 'png', 'txt']
 
-    public async store (fileUpload: FileUpload): Promise<Media> {
-      const { filename, createReadStream } = await fileUpload
-      const file = await StorageProvider.upload(createReadStream(), filename)
+    public async store (stream: ReadStream): Promise<Media> {
+      const file = await StorageProvider.upload(stream)
       const media = new Media()
       media.name = file.fileName
       media.type = file.type

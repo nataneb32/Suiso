@@ -1,6 +1,7 @@
 import { StorageProvider, File } from './interface'
 import * as fs from 'fs'
 import * as path from 'path'
+import * as FileType from 'file-type'
 
 class LocalStorageProvider implements StorageProvider {
     private storagePath: string;
@@ -17,8 +18,8 @@ class LocalStorageProvider implements StorageProvider {
       return result.join('')
     }
 
-    public async upload (readStream: fs.ReadStream, originalName: string): Promise<File> {
-      const type = path.extname(originalName)
+    public async upload (readStream: fs.ReadStream): Promise<File> {
+      const type = await FileType.fromStream(readStream)
 
       const mediaToken = this.generateRandomName(20)
       const fileName = `${mediaToken}${type}`
@@ -26,10 +27,9 @@ class LocalStorageProvider implements StorageProvider {
       await new Promise(resolve => readStream.pipe(writeStream).on('finish', () => resolve()))
 
       return <File>{
-        name: originalName,
         fileName: fileName,
         id: '',
-        type: originalName.split('.').pop()
+        type: type.mime
       }
     }
 
