@@ -5,6 +5,9 @@ export default {
   Query: {
     async courses (_, { limit, offset }) {
       return CourseService.getCourses(offset, limit)
+    },
+    async course (_, { id }) {
+      return CourseService.findById(id)
     }
   },
   Mutation: {

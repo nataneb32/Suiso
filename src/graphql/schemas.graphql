@@ -23,6 +23,7 @@ type Course {
 
 type Query {
     users: [User!]
+    course(id: ID!): Course
     courses(limit: Int = 10, offset: Int = 0): [Course!]
 }
 

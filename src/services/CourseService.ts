@@ -23,6 +23,7 @@ class CourseService {
   public async findById (id: number): Promise<Course> {
     return getRepository(Course).createQueryBuilder('course')
       .leftJoinAndSelect('course.seller', 'seller')
+      .leftJoinAndSelect('course.thumbnail', 'thumbnail')
       .where('course.id = :id', { id })
       .getOne()
   }
