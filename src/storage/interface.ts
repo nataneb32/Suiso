@@ -8,8 +8,6 @@ export interface StorageProvider{
 }
 
 export type File = {
-    name: string,
     fileName: string,
-    id: string,
     type: string
 }

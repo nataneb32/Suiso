@@ -1,5 +1,6 @@
 import CourseService from '../services/CourseService'
 import { createCourseObject } from '../interface/CourseInterface'
+import { FileUpload } from 'graphql-upload'
 export default {
   Query: {
     async courses (_, { limit, offset }) {
@@ -8,9 +9,8 @@ export default {
   },
   Mutation: {
     async createCourse (_, { userId, name, price, description, thumbnail }) {
-      const course = createCourseObject({ name, thumbnail, sellerId: userId, price, description })
-      const a = await CourseService.createCourse(course)
-      return a
+      const course = await createCourseObject({ name, thumbnail: <Promise<FileUpload>>thumbnail, sellerId: userId, price, description })
+      return CourseService.createCourse(course)
     }
   }
 }

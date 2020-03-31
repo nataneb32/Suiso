@@ -2,8 +2,8 @@ import { Course } from '../entity/Course'
 import { getRepository } from 'typeorm'
 import UserService from './UserService'
 import MediaService from './MediaService'
-import { Media } from '../entity/Media'
 import { ICourse } from '../interface/CourseInterface'
+import { Media } from '../entity/Media'
 
 class CourseService {
   public async getCourses (offset: number, limit: number): Promise<Course[]> {
@@ -28,7 +28,7 @@ class CourseService {
   }
 
   public async createCourse (userObject: ICourse) {
-    const thumbnail = MediaService.store(userObject.thumbnail)
+    const thumbnail = await MediaService.store(userObject.thumbnail)
     const seller = await UserService.findById(userObject.sellerId)
     const newCourse = getRepository(Course).create()
 

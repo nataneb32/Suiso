@@ -1,7 +1,7 @@
 import { StorageProvider, File } from './interface'
 import * as fs from 'fs'
 import * as path from 'path'
-import * as FileType from 'file-type'
+import * as FileType from 'stream-file-type'
 
 class LocalStorageProvider implements StorageProvider {
     private storagePath: string;
@@ -19,16 +19,26 @@ class LocalStorageProvider implements StorageProvider {
     }
 
     public async upload (readStream: fs.ReadStream): Promise<File> {
-      const type = await FileType.fromStream(readStream)
+      console.log(readStream)
+      // const type = await FileType.fromStream(readStream)
+      const detector = new FileType()
+      const newStream = readStream.pipe(detector)
+
+      const type = await detector.fileTypePromise()
+      // const type = {
+      //   ext: 'jpg',
+      //   mime: 'image/jpeg'
+      // }
 
       const mediaToken = this.generateRandomName(20)
-      const fileName = `${mediaToken}${type}`
+      const fileName = `${mediaToken}.${type.ext}`
       const writeStream = fs.createWriteStream(path.join(this.storagePath, fileName))
+
+      newStream.pipe(writeStream)
       await new Promise(resolve => readStream.pipe(writeStream).on('finish', () => resolve()))
 
       return <File>{
         fileName: fileName,
-        id: '',
         type: type.mime
       }
     }
